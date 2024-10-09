@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Title } from './title';
-import { Input } from '../ui';
-import { RangeSlider } from './range-slider';
-import { CheckboxFiltersGroup } from './checkbox-filters-group';
-import { useQueryFilters, useIngredients, useFilters } from '@/hooks';
+import React from "react";
+import { Title } from "./title";
+import { Input } from "../ui";
+import { RangeSlider } from "./range-slider";
+import { CheckboxFiltersGroup } from "./checkbox-filters-group";
+import { useQueryFilters, useIngredients, useFilters } from "@/shared/hooks";
 
 interface Props {
   className?: string;
@@ -17,12 +17,15 @@ export const Filters: React.FC<Props> = ({ className }) => {
 
   useQueryFilters(filters);
 
-  const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
+  const items = ingredients.map((item) => ({
+    value: String(item.id),
+    text: item.name,
+  }));
 
   const updatePrices = (prices: number[]) => {
     console.log(prices, 999);
-    filters.setPrices('priceFrom', prices[0]);
-    filters.setPrices('priceTo', prices[1]);
+    filters.setPrices("priceFrom", prices[0]);
+    filters.setPrices("priceTo", prices[1]);
   };
 
   return (
@@ -37,8 +40,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
         onClickCheckbox={filters.setPizzaTypes}
         selected={filters.pizzaTypes}
         items={[
-          { text: 'Тонкое', value: '1' },
-          { text: 'Традиционное', value: '2' },
+          { text: "Тонкое", value: "1" },
+          { text: "Традиционное", value: "2" },
         ]}
       />
 
@@ -49,9 +52,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
         onClickCheckbox={filters.setSizes}
         selected={filters.sizes}
         items={[
-          { text: '20 см', value: '20' },
-          { text: '30 см', value: '30' },
-          { text: '40 см', value: '40' },
+          { text: "20 см", value: "20" },
+          { text: "30 см", value: "30" },
+          { text: "40 см", value: "40" },
         ]}
       />
 
@@ -65,7 +68,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
             min={0}
             max={1000}
             value={String(filters.prices.priceFrom)}
-            onChange={(e) => filters.setPrices('priceFrom', Number(e.target.value))}
+            onChange={(e) =>
+              filters.setPrices("priceFrom", Number(e.target.value))
+            }
           />
           <Input
             type="number"
@@ -73,7 +78,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
             max={1000}
             placeholder="1000"
             value={String(filters.prices.priceTo)}
-            onChange={(e) => filters.setPrices('priceTo', Number(e.target.value))}
+            onChange={(e) =>
+              filters.setPrices("priceTo", Number(e.target.value))
+            }
           />
         </div>
 
@@ -81,7 +88,10 @@ export const Filters: React.FC<Props> = ({ className }) => {
           min={0}
           max={1000}
           step={10}
-          value={[filters.prices.priceFrom || 0, filters.prices.priceTo || 1000]}
+          value={[
+            filters.prices.priceFrom || 0,
+            filters.prices.priceTo || 1000,
+          ]}
           onValueChange={updatePrices}
         />
       </div>
